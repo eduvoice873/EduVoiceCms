@@ -1,7 +1,9 @@
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <h1>S11-25-Equipo-52-WebApp</h1>
+      <div className="p-10 bg-blue-500 text-white text-3xl font-bold">
+        Tailwind funciona 😎✨
+      </div>
     </div>
   );
 }
