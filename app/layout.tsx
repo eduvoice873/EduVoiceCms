@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Nunito, Lato } from "next/font/google";
+import { ReactNode } from "react";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -16,8 +17,11 @@ export const metadata = {
   title: "EduVoice",
   description: "Plataforma  moderna",
 };
+interface RootLayoutProps{
+  children: ReactNode;
+}
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${nunito.variable} ${lato.variable}`}>
       <body>{children}</body>

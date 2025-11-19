@@ -23,16 +23,17 @@ export default function StyleGuide() {
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Botones</h2>
         <div className="flex gap-4">
-          <Button>Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
+          <Button variant="primary" className={undefined} size={undefined}>Primary</Button>
+
+          <Button variant="secondary" className={undefined} size={undefined}>Secondary</Button>
+          <Button variant="outline" className={undefined} size={undefined}>Outline</Button>
         </div>
       </section>
 
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Inputs</h2>
         <Input placeholder="Escribe algo..." />
-        <Input variant="error" placeholder="Error input" />
+        <Input state="error" placeholder="Error input" />
         <Input size="lg" placeholder="Grande" />
       </section>
 
@@ -52,7 +53,7 @@ export default function StyleGuide() {
   <Input disabled placeholder="Deshabilitado" />
 </section>
 
-      
+
 
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Alerts</h2>

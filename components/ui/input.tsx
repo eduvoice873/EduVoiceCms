@@ -33,7 +33,7 @@ export const inputVariants = cva(
 );
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
     VariantProps<typeof inputVariants> {
   leftIcon?: React.ReactNode;
 }
@@ -50,7 +50,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           className={cn(
-            inputVariants({ variant, size, state, withIcon: leftIcon ? true : withIcon }),
+            inputVariants({ variant,  state, withIcon: leftIcon ? true : withIcon }),
             className
           )}
           {...props}
