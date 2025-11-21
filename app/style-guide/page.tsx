@@ -6,7 +6,8 @@ import {
   Navbar,
   Sidebar,
   Typography,
-} from "@/components/ui/design-system";
+  FormField,
+} from '@/components/ui/design-system';
 
 export default function StyleGuide() {
   return (
@@ -23,10 +24,16 @@ export default function StyleGuide() {
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Botones</h2>
         <div className="flex gap-4">
-          <Button variant="primary" className={undefined} size={undefined}>Primary</Button>
+          <Button variant="primary" className={undefined} size={undefined}>
+            Primary
+          </Button>
 
-          <Button variant="secondary" className={undefined} size={undefined}>Secondary</Button>
-          <Button variant="outline" className={undefined} size={undefined}>Outline</Button>
+          <Button variant="secondary" className={undefined} size={undefined}>
+            Secondary
+          </Button>
+          <Button variant="outline" className={undefined} size={undefined}>
+            Outline
+          </Button>
         </div>
       </section>
 
@@ -38,22 +45,20 @@ export default function StyleGuide() {
       </section>
 
       <section className="space-y-4">
-         <h2 className="text-2xl font-semibold">Inputs</h2>
+        <h2 className="text-2xl font-semibold">Inputs</h2>
 
         <Input placeholder="Default" />
 
-  <Input variant="outline" placeholder="Outline" />
+        <Input variant="outline" placeholder="Outline" />
 
-  <Input size="sm" placeholder="Pequeño" />
-  <Input size="lg" placeholder="Grande" />
+        <Input size="sm" placeholder="Pequeño" />
+        <Input size="lg" placeholder="Grande" />
 
-  <Input state="error" placeholder="Error input" />
-  <Input state="success" placeholder="Success input" />
+        <Input state="error" placeholder="Error input" />
+        <Input state="success" placeholder="Success input" />
 
-  <Input disabled placeholder="Deshabilitado" />
-</section>
-
-
+        <Input disabled placeholder="Deshabilitado" />
+      </section>
 
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Alerts</h2>

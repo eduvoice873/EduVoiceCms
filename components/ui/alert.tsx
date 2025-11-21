@@ -8,10 +8,13 @@ export function Alert({ type = "info", title, description }) {
     error: "bg-red-100 border-red-300 text-red-800",
   };
 
-  return (
-    <div className={cn("border rounded-xl p-4", styles[type])}>
+  return ( 
+
+
+<div className={cn("border rounded-xl p-4", styles[type])}>
       {title && <h4 className="font-bold">{title}</h4>}
       {description && <p className="text-sm mt-1">{description}</p>}
-    </div>
+
+</div>
   );
 }
