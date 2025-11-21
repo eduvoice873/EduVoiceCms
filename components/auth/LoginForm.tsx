@@ -1,4 +1,5 @@
 "use client";
+//LoginForm
 
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -9,7 +10,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginUser, LoginUserSchema } from "@/models/zod/auth";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useState } from "react";
-
+import { toast } from "sonner";
+import { FormField } from "@/components/ui/FormField";
+import { Input } from "@/components/ui/input";
 export default function LoginForm() {
   const {
     register,
@@ -33,20 +36,25 @@ export default function LoginForm() {
         setError("root", { message: "Error desconocido" });
       }
     } else {
+          toast.success("Bienvenida 😄");
       router.push("/home");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-sm flex flex-col gap-4 border-2 border-foreground p-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-sm flex flex-col gap-4  p-6">
       <div className="flex flex-col gap-1">
         <input className="border" type="text" placeholder="Nombre de usuario" {...register("name")} />
         {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
       </div>
+      <FormField label="Email" error={errors.email}>
+       <Input placeholder="Email" {...register("email")} />
+      </FormField>
       <div className="flex flex-col gap-1">
         <input className="border" type="text" placeholder="Email" {...register("email")} />
         {errors.name && <span className="text-sm text-red-500">{errors.name.message}</span>}
       </div>
+
       <div className="flex flex-col">
         <div className="flex flex-col gap-1">
           <div className="flex flex-col relative">
@@ -78,12 +86,6 @@ export default function LoginForm() {
           </button>
           {errors.root && <span className="text-sm text-red-500">{errors.root.message}</span>}
         </div>
-        <span>
-          No tienes una cuenta?{" "}
-          <Link href="/signup" className="text-yellow-500">
-            Registrarse
-          </Link>
-        </span>
       </div>
       <hr className="border" />
       <GoogleBtn />

@@ -1,4 +1,5 @@
 "use client";
+//
 
 import Link from "next/link";
 import { SignupUserSchema, SignupUser } from "@/models/zod/auth";
@@ -53,7 +54,7 @@ export default function SignupForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-sm flex flex-col gap-4 border-2 border-foreground p-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-sm flex flex-col gap-4  p-6">
       <div className="flex flex-col gap-1">
         <input className="border" type="text" placeholder="Nombre de usuario" {...register("name")} />
         {errors.name && <span className="text-xs text-red-500">{errors.name.message}</span>}
@@ -109,12 +110,6 @@ export default function SignupForm() {
           </button>
           {errors.root && <span className="text-xs text-red-500">{errors.root.message}</span>}
         </div>
-        <span>
-          Ya tienes una cuenta?{" "}
-          <Link href="/login" className="text-yellow-500">
-            Ingresar
-          </Link>
-        </span>
       </div>
       <hr className="border" />
       <GoogleBtn />
