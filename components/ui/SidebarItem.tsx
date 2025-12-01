@@ -20,11 +20,11 @@ export const SidebarItem = ({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-3 p-3 rounded-xl transition
+      className={`flex items-center gap-3 p-3 rounded-xl transition-colors
       ${
         active
-          ? "bg-blue-900 text-gray-100"
-          : "bg-white text-black hover:bg-gray-100"
+          ? 'bg-blue-900 text-gray-100'
+          : 'bg-white text-black hover:bg-blue-200'
       }`}
     >
       <div className="w-6 h-6 flex-shrink-0">{icon}</div>

@@ -1,16 +1,19 @@
 "use client";
 
 import React from 'react';
-import { SidebarItem } from './SidebarItem';
-import { menuItems } from './menuItems';
+import { usePathname } from 'next/navigation';
+import { SidebarItem, SidebarItemProps } from './SidebarItem';
+import { SidebarItemType } from '@/types/sidebar';
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
   topOffset?: number; // altura del navbar
+  items: SidebarItemType[]; // puedes tiparlo luego
 }
 
-export const Sidebar = ({ isOpen, onClose, topOffset = 64 }: SidebarProps) => {
+export const Sidebar = ({ items, isOpen, onClose }: SidebarProps) => {
+  const pathname = usePathname();
   return (
     <>
       {/* Overlay en móvil */}
@@ -23,7 +26,7 @@ export const Sidebar = ({ isOpen, onClose, topOffset = 64 }: SidebarProps) => {
 
       <aside
         className={`
-          fixed left-0 z-40 w-[260px] h-screen top-0 
+          fixed left-0 z-40 w-[260px] h-screen  top-14
           bg-white shadow-xl p-4 rounded-tr-2xl rounded-br-2xl
           transition-transform duration-300
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
@@ -31,8 +34,12 @@ export const Sidebar = ({ isOpen, onClose, topOffset = 64 }: SidebarProps) => {
         `}
       >
         <div className="flex flex-col  gap-2">
-          {menuItems.map((item) => (
-            <SidebarItem key={item.label} {...item} />
+          {items.map((item) => (
+            <SidebarItem
+              key={item.label}
+              {...item}
+              active={pathname.startsWith(item.href)}
+            />
           ))}
         </div>
       </aside>
