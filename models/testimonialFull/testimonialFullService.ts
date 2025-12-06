@@ -91,7 +91,7 @@ export class TestimonialFullService {
                     }
                 });
             } else {
-                medio = tx.medio.create({
+                medio = await tx.medio.create({
                     data: {
                         organizacionId,
                         testimonioId: testimonial.id,
