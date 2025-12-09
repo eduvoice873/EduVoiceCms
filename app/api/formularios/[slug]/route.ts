@@ -64,7 +64,7 @@ export async function GET(
         preguntas: {
           select: {
             id: true,
-            titulo: true,
+            texto: true,
             tipo: true,
             requerida: true,
             orden: true,
