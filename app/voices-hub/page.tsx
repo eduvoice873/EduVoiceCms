@@ -3,26 +3,21 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-<<<<<<<< HEAD:app/Voiceshub/page.tsx
-import VoicesHub from "@/app/landing/components/VoicesHub";
-import { ALL_TESTIMONIALS } from "@/app/landing/data/dataTestimonios";
-|||||||| 083a8ef:app/wall-of-love/page.tsx
-import WallOfLove from "@/app/landing/components/WallofLove";
-import { ALL_TESTIMONIALS } from "@/app/landing/components/testimonials-data";
-========
 import VoicesHub from "@/app/(public)/landing/components/VoicesHub";
-import { ALL_TESTIMONIALS, testimonialsData } from "@/app/(public)/landing/components/data";
-import { TestimonialRender } from "./testimonial_render-visitor";
->>>>>>>> bcb62cb48aeb620cc32db1d4131d2e57293cf72c:app/voices-hub/page.tsx
+import { ALL_TESTIMONIALS } from "@/app/(public)/landing/components/data";
 
-<<<<<<<< HEAD:app/Voiceshub/page.tsx
-export default function VoiceHubPage() {
-|||||||| 083a8ef:app/wall-of-love/page.tsx
-export default function WallOfLovePage() {
-========
+
+
+
+
+import { TestimonialRender } from "./testimonial_render-visitor";
+
+
+
+
 
 export default function VoicesHubPage() {
->>>>>>>> bcb62cb48aeb620cc32db1d4131d2e57293cf72c:app/voices-hub/page.tsx
+
   return (
     <main className="min-h-screen">
       {/* Header Navigation */}
@@ -60,14 +55,12 @@ export default function VoicesHubPage() {
 
           {/* VOICES HUB COMPLETO */}
           <div className="mt-16">
-<<<<<<<< HEAD:app/Voiceshub/page.tsx
+
             <VoicesHub testimonials={ALL_TESTIMONIALS} />
-|||||||| 083a8ef:app/wall-of-love/page.tsx
-            <WallOfLove testimonials={ALL_TESTIMONIALS} />
-========
-            <TestimonialRender testimonials={testimonialsData} />
-            <VoicesHub testimonials={ALL_TESTIMONIALS} />
->>>>>>>> bcb62cb48aeb620cc32db1d4131d2e57293cf72c:app/voices-hub/page.tsx
+
+
+
+
           </div>
 
 
