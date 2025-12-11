@@ -1,11 +1,8 @@
 import { z } from "zod";
 
-export const UserCreateSchema = z
-  .object({
-    name: z
-      .string()
-      .min(2, 'El nombre de usuario debe contener al menos 2 caracteres'),
-    email: z.string().email('Email Inválido'),
+export const UserCreateSchema = z.object({
+    name: z.string().min(2, "El nombre de usuario debe contener al menos 2 caracteres"),
+    email: z.email("Email Inválido"),
     password: z
       .string()
       .regex(
