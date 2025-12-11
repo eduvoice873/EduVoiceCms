@@ -8,14 +8,31 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AlertCircle } from "lucide-react";
 import { CategoryCreateSchema } from "@/models/category/dto/category";
+import { useEffect, useState } from "react";
 
 const formSchema = CategoryCreateSchema;
 
 export default function CreateCategoryPage() {
   const router = useRouter();
+  const { data: session } = useSession();
+  const [mounted, setMounted] = useState(false);
+
+  // Verificar si el usuario es editor
+  const isEditor = (session?.user as any)?.rol === "editor";
+
+  useEffect(() => {
+    setMounted(true);
+    if (isEditor) {
+      toast.error("No tienes permisos para crear categorías");
+      router.push("/categories");
+    }
+  }, [isEditor, router]);
+
   const {
     register,
     handleSubmit,
