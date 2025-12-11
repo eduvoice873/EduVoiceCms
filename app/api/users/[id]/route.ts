@@ -117,11 +117,11 @@ export async function PUT(
       activo: dto.activo,
     };
 
-    // Si se proporciona categoriaId para un editor, actualizar la categoría
-    if (dto.categoriaId && userFounded.rol === "editor") {
+    // Si se proporciona categoriaAsignadaId para un editor, actualizar la categoría
+    if (dto.categoriaAsignadaId && userFounded.rol === "editor") {
       // Asignar la nueva categoría
       await prisma.categoria.update({
-        where: { id: dto.categoriaId },
+        where: { id: dto.categoriaAsignadaId },
         data: { creadoPorId: id },
       });
     }
