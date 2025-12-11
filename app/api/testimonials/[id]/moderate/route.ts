@@ -52,9 +52,9 @@ export async function PATCH(
       );
     }
 
-    if (usuario.rol !== "admin") {
+    if (usuario.rol !== "admin" && usuario.rol !== "editor") {
       return NextResponse.json(
-        { error: "Solo los admins pueden moderar testimonios" },
+        { error: "Solo los admins y editores pueden moderar testimonios" },
         { status: 403 }
       );
     }
@@ -78,7 +78,7 @@ export async function PATCH(
       }
 
       if (testimonioExistente) {
-       
+
 
         // Solo actualizar el estado de la respuesta
         await prisma.respuestaFormulario.update({
