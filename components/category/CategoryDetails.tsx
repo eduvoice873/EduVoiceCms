@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useCategory } from "@/hooks/swr/useCategory";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -401,8 +402,12 @@ function StatsCard({ title, value, icon: Icon, color = "blue" }: { title: string
 export default function CategoryDetails({ id }: { id: string }) {
   const { category, isLoading, error, mutate } = useCategory(id);
   const router = useRouter();
+  const { data: session } = useSession();
   const [origin, setOrigin] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Verificar si el usuario es editor
+  const isEditor = (session?.user as any)?.rol === "editor";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -557,7 +562,7 @@ export default function CategoryDetails({ id }: { id: string }) {
       console.error("Error al eliminar:", error);
       toast.error(error instanceof Error ? error.message : "Error al eliminar el testimonio");
     }
-  };  if (isLoading) {
+  }; if (isLoading) {
     return (
       <div className="space-y-6">
         <Skeleton className="h-10 w-64" />
@@ -634,10 +639,24 @@ export default function CategoryDetails({ id }: { id: string }) {
           icon={MessageSquare}
         />
 
-        <Button onClick={handleCrearFormulario} className="mb-6 bg-brand-blue hover:bg-brand-blue/90">
-          <PlusCircle className="w-4 h-4 mr-2" />
-          Crear nuevo formulario
-        </Button>
+        {isEditor ? (
+          <Card className="border-yellow-200 bg-yellow-50 mb-6">
+            <CardContent className="p-4 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
+              <div>
+                <p className="font-medium text-yellow-900">Permisos insuficientes</p>
+                <p className="text-sm text-yellow-700 mt-1">
+                  Los editores no pueden crear ni modificar formularios. Contacta al administrador para realizar esta acción.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <Button onClick={handleCrearFormulario} className="mb-6 bg-brand-blue hover:bg-brand-blue/90">
+            <PlusCircle className="w-4 h-4 mr-2" />
+            Crear nuevo formulario
+          </Button>
+        )}
 
         {category.formularios && category.formularios.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -657,10 +676,12 @@ export default function CategoryDetails({ id }: { id: string }) {
               <MessageSquare className="w-12 h-12 text-slate-300 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-slate-900 mb-2">Sin formularios</h3>
               <p className="text-slate-500 mb-6">Aún no has creado formularios para esta categoría.</p>
-              <Button onClick={handleCrearFormulario} className="bg-brand-blue hover:bg-brand-blue/90">
-                <PlusCircle className="w-4 h-4 mr-2" />
-                Crear formulario
-              </Button>
+              {!isEditor && (
+                <Button onClick={handleCrearFormulario} className="bg-brand-blue hover:bg-brand-blue/90">
+                  <PlusCircle className="w-4 h-4 mr-2" />
+                  Crear formulario
+                </Button>
+              )}
             </CardContent>
           </Card>
         )}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -169,9 +170,21 @@ export default function FormularioBuilderPage({
   mode = "create"
 }: FormularioBuilderPageProps) {
   const router = useRouter();
+  const { data: session } = useSession();
   const { formulario, isLoading: isLoadingSWR, actualizarFormulario, crearFormulario, mutate } = useFormulario(formularioId);
   const [isLoadingForm, setIsLoadingForm] = useState(false);
   const [categoriaNombre, setCategoriaNombre] = useState("");
+
+  // Verificar si el usuario es editor
+  const isEditor = (session?.user as any)?.rol === "editor";
+
+  // Validar permisos al cargar el componente
+  useEffect(() => {
+    if (isEditor) {
+      toast.error("No tienes permisos para crear formularios");
+      router.push("/categories");
+    }
+  }, [isEditor, router]);
 
   // Usar el formulario de SWR directamente
   const formularioExistente = formulario; const form = useForm<FormValues>({
@@ -287,7 +300,7 @@ export default function FormularioBuilderPage({
     const fetchCategoria = async () => {
       const categoriaIdFinal = formularioExistente?.categoriaId ?? categoriaIdProp;
 
-      
+
 
       if (!categoriaIdFinal || formularioExistente) {
         if (!categoriaIdFinal && !formularioExistente) {

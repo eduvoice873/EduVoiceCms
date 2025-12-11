@@ -38,21 +38,26 @@ const tagService = new TagService();
  */
 // Crea una nueva etiqueta
 export async function POST(request: NextRequest) {
-    const session = await auth();
-    if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const session = await auth();
+  if (!session?.user)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    try {
-        const body = await request.json();
-        const dto = TagCreateSchema.parse(body);
-        const newTag = await tagService.createTag(dto);
+  try {
+    const body = await request.json();
+    const dto = TagCreateSchema.parse(body);
+    const newTag = await tagService.createTag(dto);
 
-        return NextResponse.json(newTag, { status: 201 });
-    } catch (error) {
-        if (error instanceof Error) return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json(newTag, { status: 201 });
+  } catch (error) {
+    if (error instanceof Error)
+      return NextResponse.json({ error: error.message }, { status: 400 });
 
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-    }
-};
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
 
 /**
  * @openapi
@@ -74,11 +79,19 @@ export async function POST(request: NextRequest) {
  *                   tag:
  *                     $ref: '#/components/schemas/TagCreateSchema'
  */
-// Obtiene todas las etiquetas
+// Obtiene todas las etiquetas de la organización del usuario autenticado
 export async function GET() {
-    const session = await auth();
-    if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const session = await auth();
+  if (!session?.user)
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const tags = await tagService.getAllTags();
-    return NextResponse.json(tags, { status: 200 });
-};
+  const organizacionId = (session.user as any).organizacionId;
+  if (!organizacionId)
+    return NextResponse.json(
+      { error: "No organization found" },
+      { status: 400 }
+    );
+
+  const tags = await tagService.getTagsByOrganizacionId(organizacionId);
+  return NextResponse.json(tags, { status: 200 });
+}
