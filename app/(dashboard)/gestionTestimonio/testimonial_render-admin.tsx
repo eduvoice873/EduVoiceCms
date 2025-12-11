@@ -36,60 +36,60 @@ export function TestimonialRender_admin({
         .then(res => res.json())
         .then(data => {
           const transformed = data.map((item: any) => ({
-          person: {
-            nombreCompleto: item.nombreCompleto || item.persona?.nombreCompleto || 'Sin nombre',
-            correo: item.correo || item.persona?.correo || '',
-            role: ''
-          },
-          testimonial: {
-            titulo: item.titulo,
-            texto: item.texto,
-            estado: item.estado,
-            media: item.imagenUrl ? {
-              type: 'image',
-              previewUrl: item.imagenUrl
-            } : item.videoUrl ? {
-              type: 'video',
-              previewUrl: item.videoUrl
+            person: {
+              nombreCompleto: item.nombreCompleto || item.persona?.nombreCompleto || 'Sin nombre',
+              correo: item.correo || item.persona?.correo || '',
+              role: ''
+            },
+            testimonial: {
+              titulo: item.titulo,
+              texto: item.texto,
+              estado: item.estado,
+              media: item.imagenUrl ? {
+                type: 'image',
+                previewUrl: item.imagenUrl
+              } : item.videoUrl ? {
+                type: 'video',
+                previewUrl: item.videoUrl
+              } : undefined,
+              destacado: item.testimonio?.destacado || false,
+              calificacion: item.calificacion,
+              date: item.creadoEn,
+              tags: item.testimonio?.etiquetas || [],
+              history: item.revisiones?.map((rev: any) => ({
+                user: rev.revisor?.name || rev.revisor?.email || 'Usuario',
+                message: rev.decision === 'aprobar' ? 'aprobó el testimonio' :
+                  rev.decision === 'rechazar' ? 'rechazó el testimonio' :
+                    `cambió el estado a ${rev.decision}`,
+                notes: rev.notas,
+                time: new Date(rev.creadoEn).toLocaleString('es-ES', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })
+              })) || []
+            },
+            id: item.id,
+            testimonioId: item.testimonioId,
+            categoria: item.formulario?.categoria ? {
+              id: item.formulario.categoria.id,
+              titulo: item.formulario.categoria.titulo
             } : undefined,
-            destacado: false,
-            calificacion: item.calificacion,
-            date: item.creadoEn,
-            tags: item.testimonio?.etiquetas || [],
-            history: item.revisiones?.map((rev: any) => ({
-              user: rev.revisor?.name || rev.revisor?.email || 'Usuario',
-              message: rev.decision === 'aprobar' ? 'aprobó el testimonio' :
-                rev.decision === 'rechazar' ? 'rechazó el testimonio' :
-                  `cambió el estado a ${rev.decision}`,
-              notes: rev.notas,
-              time: new Date(rev.creadoEn).toLocaleString('es-ES', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-              })
-            })) || []
-          },
-          id: item.id,
-          testimonioId: item.testimonioId,
-          categoria: item.formulario?.categoria ? {
-            id: item.formulario.categoria.id,
-            titulo: item.formulario.categoria.titulo
-          } : undefined,
-          preguntas: item.formulario?.preguntas || [],
-          respuestasPreguntas: item.respuestasPreguntas || null
-        }));
-        setTestimonials(transformed);
+            preguntas: item.formulario?.preguntas || [],
+            respuestasPreguntas: item.respuestasPreguntas || null
+          }));
+          setTestimonials(transformed);
 
-        // Actualizar selected si existe
-        if (selected) {
-          const updatedSelected = transformed.find(t => t.id === selected.id);
-          if (updatedSelected) {
-            setSelected(updatedSelected);
+          // Actualizar selected si existe
+          if (selected) {
+            const updatedSelected = transformed.find(t => t.id === selected.id);
+            if (updatedSelected) {
+              setSelected(updatedSelected);
+            }
           }
-        }
-      });
+        });
     }, 300);
   };
 
@@ -121,7 +121,7 @@ export function TestimonialRender_admin({
                 type: 'video',
                 previewUrl: item.videoUrl
               } : undefined,
-              destacado: false,
+              destacado: item.testimonio?.destacado || false,
               calificacion: item.calificacion,
               preguntas: item.formulario?.preguntas,
               respuestasPreguntas: item.respuestasPreguntas,
