@@ -25,7 +25,7 @@ export default function Features() {
             </div>
             <h3 className="text-2xl font-extrabold font-nunito text-brand-blue mb-3">Multimedia Completo</h3>
             <p className="text-gray-600 text-lg mb-4 font-lato">
-              Soporta video, texto e imagen. Integración nativa con YouTube y Cloudinary para
+              Soporta video, texto e imagen. Integración nativa con Cloudinary para
               almacenamiento optimizado.
             </p>
             <ul className="space-y-2 text-gray-700 font-lato">
